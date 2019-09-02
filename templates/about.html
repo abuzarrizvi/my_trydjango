@@ -19,7 +19,14 @@
 
 <ul>
 {% for my_subitem in my_list %}
- <li>{{forloop.counter}} - {{my_subitem}}</li>
+ 	{% if my_subitem == 312 %}
+ 		<li>{{forloop.counter}} - {{my_subitem |add:22}}</li>
+ 	{% elif my_subitem == "ABC" %}
+ 		<li>This is not a network</li>
+ 	{% else %}
+ 	
+ 		<li>{{forloop.counter}} - {{my_subitem }}</li>
+ 	{% endif %}
 {% endfor %}
 </ul>
 
