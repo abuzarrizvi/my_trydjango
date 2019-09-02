@@ -4,10 +4,14 @@
 	
 
 <h1>About</h1>
+<h3>{{ title|capfirst }}</h3>
+<h3>{{ title|capfirst|upper }}</h3>
 <p>This is a template</p>
 
-<p>
 
+{{my_html|safe}}
+
+<p>
 {{ my_text }}, {{ my_number }}
 {{my_list}}
 </p>
