@@ -17,8 +17,8 @@ def about_view(request, *args, **kwargs):
 		"my_text": "This is about us",
 		"my_number":123,
 		"my_list": [123,42423,14343]
-
 	}
+
 	return render(request,"about.html", my_context)
 
 def social_view(request, *args, **kwargs):

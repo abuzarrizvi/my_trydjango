@@ -12,4 +12,15 @@
 {{my_list}}
 </p>
 
+<ul>
+	<li>Item 1</li>
+	<li>Item 2</li>
+</ul>
+
+<ul>
+{% for my_subitem in my_list %}
+ <li>{{forloop.counter}} - {{my_subitem}}</li>
+{% endfor %}
+</ul>
+
 {% endblock %}
