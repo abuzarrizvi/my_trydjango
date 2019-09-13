@@ -22,7 +22,8 @@ def about_view(request, *args, **kwargs):
 	}
 
 	return render(request,"about.html", my_context)
-
+def conflictmaster(request, *args, **kwargs):
+	return 'master'
 def social_view(request, *args, **kwargs):
 	#return HttpResponse("<h1>Social Page</h1>") # string of HTML code
 	return render(request,"social.html", {})
