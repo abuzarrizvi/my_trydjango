@@ -26,7 +26,7 @@ from .forms import ProductForm,RawProductForm
 #		# Product.objects.create(title=ym_new_title)
 #	context = {}
 #	return render(request,"products/product_create.html",context)
-def render_initial_data(request):
+def product_update_view(request):
 	initial_data = {
 		'title': "My this awesome title"
 	}
@@ -43,22 +43,14 @@ def product_create_view(request):
 	form = ProductForm(request.POST or None)
 	if form.is_valid():
 		form.save()
-		form = ProductForm()
-	#context = {
-	#	'title':obj.title,
-	#	'description': obj.description
-	#}	
+		form = ProductForm()	
 	context = {
 		'form': form
 	}
 	return render(request,"products/product_create.html",context)
 
-def product_detail_view(request):
-	obj = Product.objects.get(id=1)
-	#context = {
-	#	'title':obj.title,
-	#	'description': obj.description
-	#}
+def product_detail_view(request, id):
+	obj = Product.objects.get(id=id)
 	context = {
 		'object':obj
 	}
