@@ -19,10 +19,6 @@ from .forms import ProductForm,RawProductForm
 #	}
 #	return render(request,"products/product_create.html",context)
 
-
-
-
-
 #def product_create_view(request):
 #	if request.method =="POST":
 #		my_new_title = request.POST.get('title')
@@ -56,7 +52,6 @@ def product_create_view(request):
 	}
 	return render(request,"products/product_create.html",context)
 
-
 def product_detail_view(request):
 	obj = Product.objects.get(id=1)
 	#context = {
@@ -67,3 +62,10 @@ def product_detail_view(request):
 		'object':obj
 	}
 	return render(request,"products/product_detail.html",context)
+
+def dynamic_lookup_view(request, my_id):
+	obj = Product.objects.get(id=my_id)
+	context = {
+		"object":obj
+	}
+	return render(request, "products/product_detail.html", context)
