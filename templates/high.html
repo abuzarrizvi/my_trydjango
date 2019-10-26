@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Django Highcharts Example</title>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+  <script>
+    Highcharts.chart('container', {
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: 'Annual Stock Chart'
+        },
+        xAxis: {
+                type: 'datetime',
+                tickInterval   : 24 * 3600 * 1000*30,
+        },
+        yAxis: {
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+                enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                    },
+                    stops: [
+                        [0, Highcharts.getOptions().colors[2]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(.4).get('rgba')]
+                    ]
+                },
+                marker: {
+                    radius: 2
+                },
+                lineWidth: 1,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+        series: [{
+        	type:'area',
+            name: 'Share Price',
+            data: [ {% for data in data %} [ 
+                        {% for xy in data %} 
+                            {{xy}}
+                            {% if not forloop.last %}, 
+                            {% endif %}
+                        {% endfor %}
+                        ] 
+                        {% if not forloop.last %}, 
+                        {% endif %}
+                    {% endfor %}]
+        }]
+    });
+  </script>
+</body>
+</html>
