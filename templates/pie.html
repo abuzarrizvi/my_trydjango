@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Django Highcharts Example</title>
+</head>
+<body>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+<script>
+    Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser<br>shares<br>2017',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: false,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: 0,
+            endAngle: 360,
+            center: ['40%', '50%'],
+            size: '90%'
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '80%',
+        data: [ 
+                {% for key,value in data.alerts.items %}
+                {
+                    name: '{{key}}',
+                    y: {{value.0}},
+                    color : '{{value.1}}',
+                    dataLabels: {
+                        enabled: false
+                    }
+                    
+                }
+                {% if not forloop.last %}
+                        ,
+                    {% endif %} 
+                {% endfor %}
+            
+        ]
+    }]
+});
+
+  </script>
+</body>
+</html>

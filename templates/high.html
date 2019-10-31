@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>Django Highcharts Example</title>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
 </head>
 <body>
-  <div id="container"></div>
-  <script src="https://code.highcharts.com/highcharts.src.js"></script>
-  <script>
-    Highcharts.chart('container', {
+<div>
+    <div id="container1"></div>
+
+    <script>
+    Highcharts.chart('container1', {
         chart: {
             zoomType: 'x'
         },
@@ -17,7 +19,9 @@
         },
         xAxis: {
                 type: 'datetime',
-                tickInterval   : 24 * 3600 * 1000*30,
+                dateTimeLabelFormats: {
+                    day: '%e of %b'
+                    }
         },
         yAxis: {
             title: {
@@ -55,19 +59,79 @@
         },
         series: [{
         	type:'area',
+             pointStart: Date.UTC(2010, 0, 1),
+            pointInterval: 24 * 3600 * 1000, // one day
             name: 'Share Price',
-            data: [ {% for data in data %} [ 
-                        {% for xy in data %} 
-                            {{xy}}
-                            {% if not forloop.last %}, 
-                            {% endif %}
-                        {% endfor %}
-                        ] 
+            data: [ {% for data in datastock %}
+                        {{data.1}}
                         {% if not forloop.last %}, 
                         {% endif %}
-                    {% endfor %}]
+                        {% endfor %}
+                        ]
         }]
     });
-  </script>
+    </script>
+</div>
+<div>
+    <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+    <script>
+        Highcharts.chart('container', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 0,
+            plotShadow: false
+        },
+        title: {
+            text: 'Browser<br>shares<br>2017',
+            align: 'center',
+            verticalAlign: 'middle',
+            y: 60
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white'
+                    }
+                },
+                startAngle: 0,
+                endAngle: 360,
+                center: ['40%', '50%'],
+                size: '90%'
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            innerSize: '80%',
+            data: [ 
+                    {% for key,value in data.alerts.items %}
+                    {
+                        name: '{{key}}',
+                        y: {{value.0}},
+                        color : '{{value.1}}',
+                        dataLabels: {
+                            enabled: false
+                        }
+                        
+                    }
+                    {% if not forloop.last %}
+                            ,
+                        {% endif %} 
+                    {% endfor %}
+                
+            ]
+        }]
+    });
+
+    </script>
+</div>
 </body>
 </html>
